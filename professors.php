@@ -7,6 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Professor Page</h1>
+    <h1><?php echo "Professor PHP script working!!" ?></h1>
+    
 </body>
 </html>
