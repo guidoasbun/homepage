@@ -1,9 +1,32 @@
 <?php
     include 'database.php';
 
+        // Define a function to validate the SSN format
+        function isValidSSN($ssn) {
+          // SSN format: 3 digits, a dash, 2 digits, a dash, 4 digits
+          return preg_match("/^\d{3}-\d{2}-\d{4}$/", $ssn);
+      }
+  
+      $ssnError = "";
+  
+      if ($_SERVER["REQUEST_METHOD"] == "POST") {
+          $ssn = $_POST['ssn'];
+          
+          if (!isValidSSN($ssn)) {
+              $ssnError = "Please enter a valid SSN in the format XXX-XX-XXXX.";
+          } else {
+              // Process valid SSN, e.g., save to the database or perform other actions
+              // ...
+
+          }
+        }
+
+
 
 
     mysqli_close($conn);
+
+
 ?>
 
 <!DOCTYPE html>
@@ -74,18 +97,48 @@
         <div class="card mt-5">
             <div class="card-body">
                 <h5 class="card-title">To list the titles, classrooms, meeting days and time</h5>
-                <form>
+                <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method="post">
                   <div class="row mb-3">
                     <div class="col-md-6">
-                      <label for="exampleInputSSN" class="form-label">Enter the Social Security number</label>
-                      <input type="text" class="form-control" id="exampleInputSSN">
+                      <label for="exampleInputSSN" class="form-label">Enter the Social Security number in format XXX-XX-XXXX</label>
+                      <input 
+                        type="text" 
+                        class="form-control" 
+                        id="ssn" 
+                        name="ssn" 
+                        pattern="\d{3}-\d{2}-\d{4}" 
+                        title="Format: XXX-XX-XXXX" 
+                        required>
                     </div>
                   </div>
-                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <button type="submit" name="submit" class="btn btn-primary">Submit</button>
                 </form>
 
                 <!-- TODO: Input PHP code here -->
+               <?php
 
+                if(($_SERVER["REQUEST_METHOD"] == "POST")) {
+                  $ssn = filter_input(INPUT_POST, 'ssn', FILTER_SANITIZE_SPECIAL_CHARS);
+                  
+                  $ssn = str_replace("-", "", $ssn);
+
+                  // Enter the SQL query here
+
+
+
+
+
+
+
+
+
+
+
+                  echo $ssn;
+                }elseif(empty($ssn)) {
+                  echo "Please enter a valid SSN in the format XXX-XX-XXXX.";
+                }
+                ?>
 
             </div>
         </div>
