@@ -1,5 +1,5 @@
 <?php
-    $db_server = "localhost";
+    $db_server = "127.0.0.1";
     $db_username = "root";
     $db_password = "my-secret-pw";
     $db_name = "CPSC332DB";

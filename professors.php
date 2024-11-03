@@ -1,32 +1,7 @@
 <?php
-    include 'database.php';
-
-        // Define a function to validate the SSN format
-        function isValidSSN($ssn) {
-          // SSN format: 3 digits, a dash, 2 digits, a dash, 4 digits
-          return preg_match("/^\d{3}-\d{2}-\d{4}$/", $ssn);
-      }
-  
-      $ssnError = "";
-  
-      if ($_SERVER["REQUEST_METHOD"] == "POST") {
-          $ssn = $_POST['ssn'];
-          
-          if (!isValidSSN($ssn)) {
-              $ssnError = "Please enter a valid SSN in the format XXX-XX-XXXX.";
-          } else {
-              // Process valid SSN, e.g., save to the database or perform other actions
-              // ...
-
-          }
-        }
-
-
-
+    include "database.php";
 
     mysqli_close($conn);
-
-
 ?>
 
 <!DOCTYPE html>
@@ -119,24 +94,17 @@
 
                 if(($_SERVER["REQUEST_METHOD"] == "POST")) {
                   $ssn = filter_input(INPUT_POST, 'ssn', FILTER_SANITIZE_SPECIAL_CHARS);
-                  
-                  $ssn = str_replace("-", "", $ssn);
+
+                    if ($ssn !== null) {
+                        $ssn = str_replace("-", "", $ssn);
+                    }
 
                   // Enter the SQL query here
 
 
-
-
-
-
-
-
-
-
-
-                  echo $ssn;
-                }elseif(empty($ssn)) {
-                  echo "Please enter a valid SSN in the format XXX-XX-XXXX.";
+                  echo "The SSN you entered is {$ssn}";
+                }else{
+                    echo "";
                 }
                 ?>
 
@@ -146,25 +114,49 @@
         <div class="card mt-5">
             <div class="card-body">
                 <h5 class="card-title">To see the count of how many students got each grade</h5>
-                <form>
+                <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method="post">
                   <div class="row mb-3">
                     <div class="col-md-6">
                       <label for="exampleInputCourseNum" class="form-label">Enter the Course Number</label>
-                      <input type="text" class="form-control" id="exampleInputCourseNum" >
+                        <input
+                                type="text"
+                                class="form-control"
+                                id="courseNum"
+                                name="courseNum"
+                                pattern="^\d{4}$"
+                                maxlength="4"
+                                title="Course Number must be exactly 4 digits."
+                                required>
                     </div>
                     <div class="col-md-6">
                       <label for="exampleInputSectionNum" class="form-label">Enter the Section Number</label>
-                      <input type="text" class="form-control" id="exampleInputSectionNum" >
+                        <input
+                                type="text"
+                                class="form-control"
+                                id="sectionNum"
+                                name="sectionNum"
+                                pattern="^\d{2}$"
+                                maxlength="2"
+                                title="Section Number must be exactly 2 digits."
+                                required>
                     </div>
                   </div>
-                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <button type="submit" name="submit" class="btn btn-primary">Submit</button>
                 </form>
-
-
                 <!-- TODO: Input PHP code here -->
+                <?php
+
+                    if(($_SERVER["REQUEST_METHOD"] == "POST")) {
+                        $courseNum = filter_input(INPUT_POST, 'courseNum', FILTER_SANITIZE_SPECIAL_CHARS);
+                        $sectionNum = filter_input(INPUT_POST, 'sectionNum', FILTER_SANITIZE_SPECIAL_CHARS);
 
 
+                        // Enter the SQL query here
+                        echo "The course number you entered is: {$courseNum} <br>";
+                        echo "The section number you entered is: {$sectionNum} <br>";
 
+                    }
+                ?>
             </div>
         </div>
 
