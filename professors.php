@@ -1,6 +1,8 @@
 <?php
     include "database.php";
 
+  // close the connection
+
     mysqli_close($conn);
 ?>
 
@@ -15,7 +17,7 @@
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
       crossorigin="anonymous"
     />
-    <title>Document</title>
+    <title>CPSC332 Project</title>
   </head>
   <body>
     <div class="container">
