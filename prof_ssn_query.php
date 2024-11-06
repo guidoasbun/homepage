@@ -1,3 +1,8 @@
+<?php
+    include "database.php";
+    mysqli_close($conn);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -46,31 +51,32 @@
 
       <header class="text-center container">
         <p class="display-1">CPSC 332</p>
-        <p class="display-6">Web Page Database Application</p>
+        <p class="display-6">SSN Query</p>
       </header>
 
-      <div class="container">
-        <div class="card">
+        <div class="card mt-5">
           <div class="card-body">
-            <h5 class="card-title">Professor</h5>
+            <h5 class="card-title">Back to Home page</h5>
             <p class="card-text">
-              If you are a professor, click bellow to access the professor
-              portal
+              To go back to the main page, click the button below.
             </p>
-            <a href="professors.html" class="btn btn-primary">Professor</a>
+            <a href="index.html" class="btn btn-primary">Main</a>
           </div>
         </div>
 
-        <div class="card mt-4">
-          <div class="card-body">
-            <h5 class="card-title">Student</h5>
-            <p class="card-text">
-              If you are a student, click bellow to access the student portal
-            </p>
-            <a href="students.php" class="btn btn-primary">Student</a>
-          </div>
-        </div>
+        <?php
+            if(($_SERVER["REQUEST_METHOD"] == "POST")) {
+              $ssn = filter_input(INPUT_POST, 'ssn', FILTER_SANITIZE_SPECIAL_CHARS);
+
+                if ($ssn !== null) {
+                    $ssn = str_replace("-", "", $ssn);
+
+                    echo "The SSN you entered is: {$ssn} <br>";
+                }
+            }
+        ?>
+
       </div>
-    </div>
   </body>
 </html>
+

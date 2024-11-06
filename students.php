@@ -35,7 +35,7 @@
                 <a
                   class="nav-link active"
                   aria-current="page"
-                  href="professors.php"
+                  href="professors.html"
                   >Professor</a
                 >
               </li>

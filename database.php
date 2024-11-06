@@ -1,8 +1,8 @@
 <?php
-    $db_server = "mariadb";
-    $db_username = "cs332g1";
-    $db_password = "IZot12jf";
-    $db_name = "cs332g1";
+    $db_server = "localhost";
+    $db_username = "root";
+    $db_password = "my-secret-pw";
+    $db_name = "CPSC332DB";
     $conn = "";
 
     try{
