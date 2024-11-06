@@ -1,7 +1,11 @@
 <?php
+    // Enter "mariadb"
     $db_server = "localhost";
+    // Enter your username
     $db_username = "root";
+    // Enter your password
     $db_password = "my-secret-pw";
+    // Enter the name of the database
     $db_name = "CPSC332DB";
     $conn = "";
 
