@@ -51,7 +51,7 @@
 
       <header class="text-center container">
         <p class="display-1">CPSC 332</p>
-        <p class="display-6">Professor SSN Query</p>
+        <p class="display-6">Student Course Query</p>
       </header>
 
         <div class="card mt-5">
@@ -65,15 +65,13 @@
         </div>
 
         <?php
-            if(($_SERVER["REQUEST_METHOD"] == "POST")) {
-              $ssn = filter_input(INPUT_POST, 'ssn', FILTER_SANITIZE_SPECIAL_CHARS);
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $courseNum = filter_input(INPUT_POST, 'courseNum', FILTER_SANITIZE_SPECIAL_CHARS);
 
-                if ($ssn !== null) {
-                    $ssn = str_replace("-", "", $ssn);
+            // Enter the SQL query here
+            echo "The course number you entered is: {$courseNum} <br>";
 
-                    echo "The SSN you entered is: {$ssn} <br>";
-                }
-            }
+		}
         ?>
 
       </div>

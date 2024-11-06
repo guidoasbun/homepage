@@ -40,7 +40,7 @@
                 <a
                   class="nav-link active"
                   aria-current="page"
-                  href="students.php"
+                  href="students.html"
                   >Student</a
                 >
               </li>
@@ -51,7 +51,7 @@
 
       <header class="text-center container">
         <p class="display-1">CPSC 332</p>
-        <p class="display-6">Course and Section Query</p>
+        <p class="display-6">Professor Course and Section Query</p>
       </header>
 
         <div class="card mt-5">

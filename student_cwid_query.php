@@ -51,7 +51,7 @@
 
       <header class="text-center container">
         <p class="display-1">CPSC 332</p>
-        <p class="display-6">Professor SSN Query</p>
+        <p class="display-6">Student CWID Query</p>
       </header>
 
         <div class="card mt-5">
@@ -65,15 +65,13 @@
         </div>
 
         <?php
-            if(($_SERVER["REQUEST_METHOD"] == "POST")) {
-              $ssn = filter_input(INPUT_POST, 'ssn', FILTER_SANITIZE_SPECIAL_CHARS);
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $cwid = filter_input(INPUT_POST, 'cwid', FILTER_SANITIZE_SPECIAL_CHARS);
 
-                if ($ssn !== null) {
-                    $ssn = str_replace("-", "", $ssn);
+            // Enter the SQL query here
+            echo "The CWID you entered is: {$cwid} <br>";
 
-                    echo "The SSN you entered is: {$ssn} <br>";
-                }
-            }
+		}
         ?>
 
       </div>
