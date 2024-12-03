@@ -1,6 +1,6 @@
 <?php
     include "database.php";
-    mysqli_close($conn);
+
 ?>
 
 <!DOCTYPE html>
@@ -75,6 +75,8 @@
             echo "The section number you entered is: {$sectionNum} <br>";
 
 		}
+
+        mysqli_close($conn);
         ?>
 
       </div>
