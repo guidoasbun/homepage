@@ -66,25 +66,26 @@
         <?php
             if(($_SERVER["REQUEST_METHOD"] == "POST")) {
               $ssn = filter_input(INPUT_POST, 'ssn', FILTER_SANITIZE_SPECIAL_CHARS);
+              echo "The SSN you entered is: {$ssn} <br>";
 
-                if ($ssn !== null) {
-                    $ssn = str_replace("-", "", $ssn);
-                    $sql = "SELECT title, classroom, meeting_days, beginning_days, beginning_time, ending_time
-                            FROM sections
-                            JOIN course ON sec_course_num = course_no
-                            JOIN professors ON prof_ssn = professor.ssn
-                            WHERE prof_ssn = 'ssn';
-                            ";
-                    $result = $conn->query($sql);
-
-                    if ($result->num_rows > 0) {
-                        while($row = $result->fetch_assoc()) {
-                            echo "Course: " . $row["title"];
-                        }
-                    }
-
-
-                }
+//                if ($ssn !== null) {
+//                    $ssn = str_replace("-", "", $ssn);
+//                    $sql = "SELECT title, classroom, meeting_days, beginning_days, beginning_time, ending_time
+//                            FROM sections
+//                            JOIN course ON sec_course_num = course_no
+//                            JOIN professors ON prof_ssn = professor.ssn
+//                            WHERE prof_ssn = 'ssn';
+//                            ";
+//                    $result = $conn->query($sql);
+//
+//                    if ($result->num_rows > 0) {
+//                        while($row = $result->fetch_assoc()) {
+//                            echo "Course: " . $row["title"];
+//                        }
+//                    }
+//
+//
+//                }
             }
 
                 mysqli_close($conn);
