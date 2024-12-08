@@ -1,6 +1,6 @@
 <?php
     // Enter "mariadb"
-    $db_server = "localhost";
+    $db_server = "127.0.0.1";
     // Enter your username
     $db_username = "root";
     // Enter your password
