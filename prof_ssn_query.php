@@ -66,28 +66,34 @@
         <?php
             if(($_SERVER["REQUEST_METHOD"] == "POST")) {
               $ssn = filter_input(INPUT_POST, 'ssn', FILTER_SANITIZE_SPECIAL_CHARS);
-              echo "The SSN you entered is: {$ssn} <br>";
+              $formatted_ssn = str_replace("-", "", $ssn); // Remove dashes
 
-//                if ($ssn !== null) {
-//                    $ssn = str_replace("-", "", $ssn);
-//                    $sql = "SELECT title, classroom, meeting_days, beginning_days, beginning_time, ending_time
-//                            FROM sections
-//                            JOIN course ON sec_course_num = course_no
-//                            JOIN professors ON prof_ssn = professor.ssn
-//                            WHERE prof_ssn = 'ssn';
-//                            ";
-//                    $result = $conn->query($sql);
-//
-//                    if ($result->num_rows > 0) {
-//                        while($row = $result->fetch_assoc()) {
-//                            echo "Course: " . $row["title"];
-//                        }
-//                    }
-//
-//
-//                }
+                $query = "SELECT c.course_title, cs.classroom, cs.meeting_days, cs.start_time, cs.end_time
+                        FROM course_sections cs
+                        JOIN courses c ON cs.course_id = c.course_id
+                        WHERE cs.professor = '$formatted_ssn'";
+
+                $result = mysqli_query($conn, $query);
+
+                if (mysqli_num_rows($result) > 0) {
+                    echo "<table class='table table-striped mt-4'>";
+                    echo "<thead><tr><th>Course Title</th><th>Classroom</th><th>Meeting Days</th><th>Start Time</th><th>End Time</th></tr></thead><tbody>";
+
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        echo "<tr>
+                              <td>{$row['course_title']}</td>
+                              <td>{$row['classroom']}</td>
+                              <td>{$row['meeting_days']}</td>
+                              <td>{$row['start_time']}</td>
+                              <td>{$row['end_time']}</td>
+                            </tr>";
+                    }
+
+                    echo "</tbody></table>";
+                } else {
+                    echo "<p class='mt-4'>No classes found for the given SSN.</p>";
+                }
             }
-
                 mysqli_close($conn);
 
         ?>

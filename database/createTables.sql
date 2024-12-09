@@ -34,7 +34,7 @@ CREATE TABLE departments (
 );
 
 CREATE TABLE courses (
-    course_id INT PRIMARY KEY AUTO_INCREMENT,
+    course_id CHAR(7) PRIMARY KEY,
     course_title VARCHAR(100) NOT NULL UNIQUE,
     units INT(2) NOT NULL,
     dept_id INT,
@@ -43,8 +43,8 @@ CREATE TABLE courses (
 
 CREATE TABLE course_prerequisites (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    course_id INT NOT NULL,
-    prerequisite_course_id INT NOT NULL,
+    course_id CHAR(7) NOT NULL,
+    prerequisite_course_id CHAR(7) NOT NULL,
     FOREIGN KEY (course_id) REFERENCES courses(course_id) ON DELETE CASCADE,
     FOREIGN KEY (prerequisite_course_id) REFERENCES courses(course_id) ON DELETE CASCADE
 );
@@ -56,7 +56,7 @@ CREATE TABLE textbooks (
 );
 
 CREATE TABLE course_textbooks (
-    course_id INT NOT NULL,
+    course_id CHAR(7) NOT NULL,
     isbn CHAR(13) NOT NULL,
     PRIMARY KEY (course_id, isbn),
     FOREIGN KEY (course_id) REFERENCES courses(course_id),
@@ -64,9 +64,9 @@ CREATE TABLE course_textbooks (
 );
 
 CREATE TABLE course_sections (
-    section_id INT PRIMARY KEY AUTO_INCREMENT,
-    course_id INT NOT NULL,
-    section_number INT NOT NULL ,
+    course_number CHAR(5) PRIMARY KEY,
+    course_id CHAR(7) NOT NULL,
+    section_number VARCHAR(2) NOT NULL,
     classroom VARCHAR(50),
     seats INT(3) NOT NULL,
     meeting_days VARCHAR(50),
@@ -102,8 +102,9 @@ CREATE TABLE student_minors (
 CREATE TABLE enrollment (
     enrollment_id INT PRIMARY KEY AUTO_INCREMENT,
     cwid CHAR(9) NOT NULL,
-    section_id INT NOT NULL,
+    course_number CHAR(5) NOT NULL,
     grade VARCHAR(2),
     FOREIGN KEY (cwid) REFERENCES students(cwid) ON DELETE CASCADE,
-    FOREIGN KEY (section_id) REFERENCES course_sections(section_id) ON DELETE CASCADE
+    FOREIGN KEY (course_number) REFERENCES course_sections(course_number) ON DELETE CASCADE
 );
+

@@ -69,7 +69,7 @@
             $courseNum = filter_input(INPUT_POST, 'courseNum', FILTER_SANITIZE_SPECIAL_CHARS);
 
             // Enter the SQL query here
-            echo "The course number you entered is: {$courseNum} <br>";
+
 
 		}
         ?>

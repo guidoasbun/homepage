@@ -65,14 +65,42 @@
         </div>
 
         <?php
+
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $courseNum = filter_input(INPUT_POST, 'courseNum', FILTER_SANITIZE_SPECIAL_CHARS);
             $sectionNum = filter_input(INPUT_POST, 'sectionNum', FILTER_SANITIZE_SPECIAL_CHARS);
 
+            $query = "
+                SELECT 
+                    grade, 
+                    COUNT(*) AS grade_count
+                FROM 
+                    enrollment 
+                JOIN 
+                    course_sections 
+                ON 
+                    enrollment.course_number = course_sections.course_number
+                WHERE 
+                    course_sections.course_number = '$courseNum'
+                    AND course_sections.section_number = '$sectionNum'
+                GROUP BY 
+                    grade;
+            ";
 
-            // Enter the SQL query here
-            echo "The course number you entered is: {$courseNum} <br>";
-            echo "The section number you entered is: {$sectionNum} <br>";
+            $result = mysqli_query($conn, $query);
+
+            if ($result) {
+                echo "<table class='table'>";
+                echo "<thead><tr><th>Grade</th><th>Count</th></tr></thead><tbody>";
+
+                while ($row = mysqli_fetch_assoc($result)) {
+                    echo "<tr><td>" . htmlspecialchars($row['grade']) . "</td><td>" . htmlspecialchars($row['grade_count']) . "</td></tr>";
+                }
+
+                echo "</tbody></table>";
+            } else {
+                echo "Error executing query: " . mysqli_error($conn);
+            }
 
 		}
 
