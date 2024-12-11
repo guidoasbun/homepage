@@ -1,6 +1,6 @@
 <?php
     include "database.php";
-    mysqli_close($conn);
+
 ?>
 
 <!DOCTYPE html>
@@ -69,8 +69,57 @@
             $cwid = filter_input(INPUT_POST, 'cwid', FILTER_SANITIZE_SPECIAL_CHARS);
 
             // Enter the SQL query here
-            echo "The CWID you entered is: {$cwid} <br>";
+            // First check if the CWID exists in students table
+            $check_student = "SELECT cwid FROM students WHERE cwid = '$cwid'";
+            $student_result = mysqli_query($conn, $check_student);
 
+            if (mysqli_num_rows($student_result) > 0) {
+                // CWID exists, proceed with course query
+                $sql = "SELECT c.course_id, c.course_title, cs.section_number, e.grade 
+                    FROM enrollment e
+                    JOIN course_sections cs ON e.course_number = cs.course_number
+                    JOIN courses c ON cs.course_id = c.course_id
+                    WHERE e.cwid = '$cwid'";
+
+                $result = mysqli_query($conn, $sql);
+
+                if (mysqli_num_rows($result) > 0) {
+                    echo '<div class="card mt-5">';
+                    echo '<div class="card-body">';
+                    echo '<h5 class="card-title">Course Information for CWID: ' . htmlspecialchars($cwid) . '</h5>';
+                    echo '<table class="table">';
+                    echo '<thead><tr><th>Course ID</th><th>Course Title</th><th>Section</th><th>Grade</th></tr></thead>';
+                    echo '<tbody>';
+
+                    while($row = mysqli_fetch_assoc($result)) {
+                        echo '<tr>';
+                        echo '<td>' . htmlspecialchars($row['course_id']) . '</td>';
+                        echo '<td>' . htmlspecialchars($row['course_title']) . '</td>';
+                        echo '<td>' . htmlspecialchars($row['section_number']) . '</td>';
+                        echo '<td>' . htmlspecialchars($row['grade']) . '</td>';
+                        echo '</tr>';
+                    }
+
+                    echo '</tbody></table>';
+                    echo '</div></div>';
+                } else {
+                    echo '<div class="card mt-5">';
+                    echo '<div class="card-body">';
+                    echo '<h5 class="card-title">No courses found</h5>';
+                    echo '<p class="card-text">No course records found for CWID: ' . htmlspecialchars($cwid) . '</p>';
+                    echo '</div></div>';
+                }
+            } else {
+                // CWID not found in database
+                echo '<div class="card mt-5">';
+                echo '<div class="card-body">';
+                echo '<h5 class="card-title">CWID Not Found</h5>';
+                echo '<p class="card-text">The CWID you entered is not found in the database.</p>';
+                echo '</div></div>';
+            }
+
+
+            mysqli_close($conn);
 		}
         ?>
 

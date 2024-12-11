@@ -107,4 +107,3 @@ CREATE TABLE enrollment (
     FOREIGN KEY (cwid) REFERENCES students(cwid) ON DELETE CASCADE,
     FOREIGN KEY (course_number) REFERENCES course_sections(course_number) ON DELETE CASCADE
 );
-
