@@ -1,6 +1,6 @@
 <?php
     include "database.php";
-    mysqli_close($conn);
+
 ?>
 
 <!DOCTYPE html>
@@ -67,11 +67,50 @@
         <?php
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $courseNum = filter_input(INPUT_POST, 'courseNum', FILTER_SANITIZE_SPECIAL_CHARS);
+            echo "The course number you entered is: {$courseNum} <br>";
+            $query = "
+                SELECT 
+                    cs.section_number, 
+                    cs.classroom, 
+                    cs.meeting_days, 
+                    CONCAT(cs.start_time, ' - ', cs.end_time) AS meeting_time, 
+                    COUNT(e.cwid) AS num_students_enrolled
+                FROM 
+                    course_sections cs
+                LEFT JOIN 
+                    enrollment e 
+                ON 
+                    cs.course_number = e.course_number
+                WHERE 
+                    cs.course_number = '$courseNum'
+                GROUP BY 
+                    cs.section_number, cs.classroom, cs.meeting_days, cs.start_time, cs.end_time;
+            ";
 
-            // Enter the SQL query here
+            $result = mysqli_query($conn, $query);
 
+            if ($result && mysqli_num_rows($result) > 0) {
+                echo "<table class='table'>";
+                echo "<thead><tr><th>Section</th><th>Classroom</th><th>Meeting Days</th><th>Meeting Time</th><th>Students Enrolled</th></tr></thead><tbody>";
+
+                while ($row = mysqli_fetch_assoc($result)) {
+                    echo "<tr>
+                    <td>" . htmlspecialchars($row['section_number']) . "</td>
+                    <td>" . htmlspecialchars($row['classroom']) . "</td>
+                    <td>" . htmlspecialchars($row['meeting_days']) . "</td>
+                    <td>" . htmlspecialchars($row['meeting_time']) . "</td>
+                    <td>" . htmlspecialchars($row['num_students_enrolled']) . "</td>
+                  </tr>";
+                }
+
+                echo "</tbody></table>";
+            } else {
+                echo "<p>No sections found for the course number provided.</p>";
+            }
 
 		}
+
+        mysqli_close($conn);
         ?>
 
       </div>

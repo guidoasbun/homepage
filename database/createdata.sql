@@ -82,15 +82,28 @@ VALUES
 
 INSERT INTO course_sections (course_number, course_id, section_number, classroom, seats, meeting_days, start_time, end_time, professor)
 VALUES
-    ('10453', 'CPSC101', '01', 'Room A101', 30, 'MWF', '09:00:00', '10:15:00', '123456789'), -- Section 01 of CPSC101
-    ('20398', 'CPSC101', '02', 'Room A102', 25, 'TTh', '11:00:00', '12:15:00', '234567890'), -- Section 02 of CPSC101
-    ('39842', 'CPSC201', '01', 'Room B201', 35, 'MWF', '13:00:00', '14:15:00', '345678901'), -- Section 01 of CPSC201
-    ('50219', 'MATH101', '01', 'Room B202', 40, 'TTh', '10:30:00', '11:45:00', '456789012'), -- Section 01 of MATH101
-    ('61234', 'MATH101', '02', 'Room C301', 20, 'MWF', '15:00:00', '16:15:00', '567890123'), -- Section 02 of MATH101
-    ('78234', 'PHYS101', '01', 'Room C302', 25, 'TTh', '14:00:00', '15:15:00', '678901234'), -- Section 01 of PHYS101
-    ('89213', 'PHYS201', '01', 'Room D401', 30, 'MWF', '11:00:00', '12:15:00', '123456789'), -- Section 01 of PHYS201
-    ('90123', 'ENGR101', '01', 'Room E501', 20, 'TTh', '15:30:00', '16:45:00', '234567890'), -- Section 01 of ENGR101
-    ('11234', 'ENGR201', '01', 'Room E502', 25, 'MWF', '14:00:00', '15:15:00', '678901234'); -- Section 01 of ENGR201
+    -- CPSC101 (Intro to Programming) has 3 sections
+    ('10453', 'CPSC101', '01', 'Room A101', 30, 'MWF', '09:00:00', '10:15:00', '123456789'),
+    ('20398', 'CPSC101', '02', 'Room A102', 25, 'TTh', '11:00:00', '12:15:00', '234567890'),
+    ('30157', 'CPSC101', '03', 'Room A103', 28, 'MWF', '14:00:00', '15:15:00', '345678901'),
+
+    -- CPSC201 (Data Structures) has 2 sections
+    ('39842', 'CPSC201', '01', 'Room B201', 35, 'MWF', '13:00:00', '14:15:00', '345678901'),
+    ('40891', 'CPSC201', '02', 'Room B202', 35, 'TTh', '15:30:00', '16:45:00', '123456789'),
+
+    -- MATH101 (Calculus I) has 3 sections due to high demand
+    ('50219', 'MATH101', '01', 'Room B202', 40, 'TTh', '10:30:00', '11:45:00', '456789012'),
+    ('61234', 'MATH101', '02', 'Room C301', 20, 'MWF', '15:00:00', '16:15:00', '567890123'),
+    ('71235', 'MATH101', '03', 'Room C302', 35, 'TTh', '13:00:00', '14:15:00', '234567890'),
+
+    -- PHYS101 (Classical Mechanics) has 2 sections
+    ('78234', 'PHYS101', '01', 'Room C302', 25, 'TTh', '14:00:00', '15:15:00', '678901234'),
+    ('79234', 'PHYS101', '02', 'Room C303', 25, 'MWF', '10:30:00', '11:45:00', '345678901'),
+
+    -- Single sections for upper division courses
+    ('89213', 'PHYS201', '01', 'Room D401', 30, 'MWF', '11:00:00', '12:15:00', '123456789'),
+    ('90123', 'ENGR101', '01', 'Room E501', 20, 'TTh', '15:30:00', '16:45:00', '234567890'),
+    ('11234', 'ENGR201', '01', 'Room E502', 25, 'MWF', '14:00:00', '15:15:00', '678901234');
 
 
 INSERT INTO students (cwid, first_Name, last_Name, address_street, address_city, address_state, address_zip, telephone_area_code, telephone_number, major_dept)
@@ -112,26 +125,31 @@ VALUES
     ('583729461', 'Oscar', 'Reed', '115 Willow St', 'San Diego', 'CA', '92101', '619', '5678901', 3), -- Physics
     ('491728365', 'Paula', 'Smith', '116 Elm St', 'Sacramento', 'CA', '94203', '916', '6789012', 4); -- Engineering
 
-INSERT INTO enrollment (enrollment_id, cwid, enrollment.course_number, grade)
-VALUES
-    (1, '134578943', '10453', 'A'), -- Student enrolled in Section 01 of CPSC101
-    (2, '287654321', '20398', 'B+'), -- Student enrolled in Section 02 of CPSC101
-    (3, '987654320', '39842', 'C'), -- Student enrolled in Section 01 of CPSC201
-    (4, '453267891', '50219', 'A-'), -- Student enrolled in Section 01 of MATH101
-    (5, '572894165', '61234', 'B'), -- Student enrolled in Section 02 of MATH101
-    (6, '394751286', '78234', 'C+'), -- Student enrolled in Section 01 of PHYS101
-    (7, '826371459', '89213', 'B-'), -- Student enrolled in Section 01 of PHYS201
-    (8, '562834791', '90123', 'C-'), -- Student enrolled in Section 01 of ENGR101
-    (9, '978216543', '11234', 'D+'), -- Student enrolled in Section 01 of ENGR201
-    (10, '482916738', '10453', 'D'), -- Another student in Section 01 of CPSC101
-    (11, '192837465', '20398', 'D-'), -- Another student in Section 02 of CPSC101
-    (12, '362948571', '39842', 'F'), -- Another student in Section 01 of CPSC201
-    (13, '725891643', '50219', 'A+'), -- Another student in Section 01 of MATH101
-    (14, '936274815', '61234', 'B+'), -- Another student in Section 02 of MATH101
-    (15, '583729461', '78234', 'B'), -- Another student in Section 01 of PHYS101
-    (16, '491728365', '89213', 'A'), -- Another student in Section 01 of PHYS201
-    (17, '134578943', '90123', 'C+'), -- Student again, in Section 01 of ENGR101
-    (18, '287654321', '11234', 'A'), -- Student again, in Section 01 of ENGR201
-    (19, '987654320', '10453', 'B'), -- Student again, in Section 01 of CPSC101
-    (20, '453267891', '20398', 'B+'); -- Student again, in Section 02 of CPSC101
+INSERT INTO enrollment (cwid, course_number, grade) VALUES
+    -- Enrollments in CPSC101 sections
+    ('134578943', '10453', 'A'),    -- Section 01
+    ('287654321', '20398', 'B+'),   -- Section 02
+    ('987654320', '30157', 'B'),    -- Section 03
+    ('453267891', '10453', 'A-'),   -- Section 01
+
+    -- Enrollments in CPSC201 sections
+    ('572894165', '39842', 'B'),    -- Section 01
+    ('394751286', '40891', 'C+'),   -- Section 02
+    ('826371459', '39842', 'B-'),   -- Section 01
+    ('134578943', '39842', 'A+'),
+
+    -- Enrollments in MATH101 sections
+    ('562834791', '50219', 'C-'),   -- Section 01
+    ('978216543', '61234', 'B+'),   -- Section 02
+    ('482916738', '71235', 'A-'),   -- Section 03
+    ('192837465', '50219', 'B'),    -- Section 01
+
+    -- Enrollments in PHYS101 sections
+    ('362948571', '78234', 'B+'),   -- Section 01
+    ('725891643', '79234', 'A'),    -- Section 02
+
+    -- Enrollments in other courses (single sections)
+    ('936274815', '89213', 'B+'),   -- PHYS201 Section 01
+    ('583729461', '90123', 'B'),    -- ENGR101 Section 01
+    ('491728365', '11234', 'A');    -- ENGR201 Section 01
 
